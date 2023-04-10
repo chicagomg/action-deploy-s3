@@ -1,12 +1,28 @@
 #!/usr/bin/env python3
-'''
+
 import boto3
-import os,re,
+import os,re
 import glob
+from botocore.config import Config
+from dotenv import load_dotenv
 
-BUCKET = "cber.lol"
 
-client = boto3.client("s3")
+load_dotenv()
+
+def upload_with_content_type_gzip(file, ext):
+    client.upload_file(file, os.getenv('AWS_BUCKET'), file, ExtraArgs={'ContentType': ext, 'ContentEncoding': 'gzip', 'ACL': 'public-read'})
+    print(file, ext)
+
+def upload_with_content_type(file, ext):
+    client.upload_file(file, os.getenv('AWS_BUCKET'), file, ExtraArgs={'ContentType': ext, 'ACL': 'public-read'})
+    print(file, ext)
+
+client = boto3.client('s3', 
+    aws_access_key_id=os.getenv('AWS_ACCESS_KEY'), 
+    aws_secret_access_key=os.getenv('AWS_SECRET_KEY'), 
+    region_name=os.getenv('AWS_REGION')
+)
+
 
 file_types = {
 '.css': 'text/css',
@@ -21,15 +37,12 @@ file_types = {
 
 file_list = glob.glob('**/*.*', recursive=True)
 
-for a in file_list:
+for file in file_list:
     for i in file_types.keys():
         my_regex = r".*" + re.escape(i) + r"$"
-        if re.search(my_regex, a, re.IGNORECASE):
+        for m in re.findall(my_regex, file, re.IGNORECASE):
             ext = file_types.get(i)
-            print(a, ext)
-            client.upload_file(a, BUCKET, a, ExtraArgs={'ContentType': ext, 'ACL': 'public-read'})
-            break
-        else:
-            client.upload_file(a, BUCKET, a, ExtraArgs={'ACL': 'public-read'})
-'''
-print("Hello World")
+            if ext == 'text/javascript' or ext == 'text/css':
+                upload_with_content_type_gzip(file, ext)
+            else:
+                upload_with_content_type(file, ext)
