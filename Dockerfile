@@ -9,4 +9,4 @@ RUN pip install --upgrade pip &&\
 COPY entrypoint.py /entrypoint.py
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-#ENTRYPOINT ["/entrypoint.py"]
+ENTRYPOINT ["/entrypoint.py"]
