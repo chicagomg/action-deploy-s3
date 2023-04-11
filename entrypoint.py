@@ -5,6 +5,7 @@ import os,re
 import glob
 from botocore.config import Config
 
+print("plugin v1.0")
 os.chdir(os.environ['WORKING_PATH'])
 
 def upload_with_content_type_gzip(file, ext):
