@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-'''
+
 import boto3
 import os,re
 import glob
@@ -46,5 +46,4 @@ for file in file_list:
                 upload_with_content_type_gzip(file, ext)
             else:
                 upload_with_content_type(file, ext)
-'''
-print($1)
+                
