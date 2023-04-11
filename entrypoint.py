@@ -5,8 +5,8 @@ import os,re
 import glob
 from botocore.config import Config
 from dotenv import load_dotenv
-'''
 
+os.chdir(os.environ['PATH'])
 load_dotenv()
 
 def upload_with_content_type_gzip(file, ext):
@@ -46,5 +46,3 @@ for file in file_list:
                 upload_with_content_type_gzip(file, ext)
             else:
                 upload_with_content_type(file, ext)
-'''
-print(os.environ['API_USER'])
