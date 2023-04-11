@@ -6,7 +6,6 @@ import glob
 from botocore.config import Config
 
 os.chdir(os.environ['WORKING_PATH'])
-load_dotenv()
 
 def upload_with_content_type_gzip(file, ext):
     client.upload_file(file, os.environ['AWS_BUCKET'], file, ExtraArgs={'ContentType': ext, 'ContentEncoding': 'gzip', 'ACL': 'public-read'})
