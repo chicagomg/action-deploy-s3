@@ -6,7 +6,7 @@ import glob
 from botocore.config import Config
 from dotenv import load_dotenv
 
-os.chdir(os.environ['PATH'])
+os.chdir(os.environ['WORKING_PATH'])
 load_dotenv()
 
 def upload_with_content_type_gzip(file, ext):
