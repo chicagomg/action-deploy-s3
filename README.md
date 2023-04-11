@@ -2,7 +2,7 @@
 ## version 1.0
 
 ### it is waiting for next variables <br>
-WORKING_PATH - working directory where from files deploy <br>
+WORKING_PATH - working directory from which files deploy <br>
 AWS_BUCKET <br>
 AWS_ACCESS_KEY <br>
 AWS_SECRET_KEY <br>
