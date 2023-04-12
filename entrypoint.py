@@ -5,7 +5,7 @@ import os,re
 import glob
 from botocore.config import Config
 
-print("plugin v1.4.0")
+print("plugin v1.4.1")
 os.chdir(os.environ['WORKING_PATH'])
 
 def upload_with_content_type_gzip(file):
@@ -18,7 +18,7 @@ def upload_with_content_type_gzip(file):
         my_regex = r".*" + re.escape(i) + r"$"
         for m in re.findall(my_regex, new_file, re.IGNORECASE):
             new_ext = new_file_types.get(i)
-            client.upload_file(new_file, os.environ['AWS_BUCKET'],
+            client.upload_file(file, os.environ['AWS_BUCKET'],
                 f"{os.environ['AWS_BUCKET_KEY']}/{new_file}", ExtraArgs={'ContentType': new_ext,
                 'ContentEncoding': 'gzip', 'ACL': 'public-read'})
             print(file, ext)
