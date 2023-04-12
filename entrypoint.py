@@ -5,14 +5,23 @@ import os,re
 import glob
 from botocore.config import Config
 
-print("plugin v1.3.1")
+print("plugin v1.4.0")
 os.chdir(os.environ['WORKING_PATH'])
 
-def upload_with_content_type_gzip(file, ext):
-    client.upload_file(file, os.environ['AWS_BUCKET'],
-        f"{os.environ['AWS_BUCKET_KEY']}/{file}", ExtraArgs={'ContentType': ext,
-        'ContentEncoding': 'gzip', 'ACL': 'public-read'})
-    print(file, ext)
+def upload_with_content_type_gzip(file):
+    new_file = file[:-3]
+    new_file_types = {
+    '.css': 'text/css',
+    '.js': 'text/javascript',
+    }
+    for i in new_file_types.keys():
+        my_regex = r".*" + re.escape(i) + r"$"
+        for m in re.findall(my_regex, new_file, re.IGNORECASE):
+            new_ext = new_file_types.get(i)
+            client.upload_file(new_file, os.environ['AWS_BUCKET'],
+                f"{os.environ['AWS_BUCKET_KEY']}/{new_file}", ExtraArgs={'ContentType': new_ext,
+                'ContentEncoding': 'gzip', 'ACL': 'public-read'})
+            print(file, ext)
 
 def upload_with_content_type(file, ext):
     client.upload_file(file, os.environ['AWS_BUCKET'],
@@ -27,13 +36,11 @@ client = boto3.client('s3',
 
 file_types = {
 '.bin': 'binary/octet-stream',
-'.css': 'text/css',
 '.gltf': 'binary/octet-stream',
 '.gz': 'application/x-gzip',
 '.html': 'text/html',
 '.jpeg': 'image/jpeg',
 '.jpg': 'image/jpeg',
-'.js': 'text/javascript',
 '.png': 'image/png',
 '.svg': 'image/svg+xml',
 '.txt': 'text/plain'
@@ -46,7 +53,7 @@ for file in file_list:
         my_regex = r".*" + re.escape(i) + r"$"
         for m in re.findall(my_regex, file, re.IGNORECASE):
             ext = file_types.get(i)
-            if ext == 'text/javascript' or ext == 'text/css':
-                upload_with_content_type_gzip(file, ext)
+            if ext == 'application/x-gzip':
+                upload_with_content_type_gzip(file)
             else:
                 upload_with_content_type(file, ext)
