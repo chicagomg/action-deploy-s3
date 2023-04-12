@@ -9,4 +9,4 @@ AWS_REGION <br>
 <br>
 
 
-<b>script dosen't copy .js, .css, .hdr, .gltf, .bin files. It just takes .gz version of them, cuts .gz, and pushes them to s3 with right metadata, like Content-Type and Content-Encoding:gzip.</b>
+<b> !!! script dosen't copy .js, .css, .hdr, .gltf, .bin files. It just takes .gz version of them, cuts .gz, and pushes them to s3 with right metadata, like Content-Type and Content-Encoding:gzip.</b>
