@@ -5,15 +5,17 @@ import os,re
 import glob
 from botocore.config import Config
 
-print("plugin v1.4.2")
+print("plugin v1.4.3")
 os.chdir(os.environ['WORKING_PATH'])
 
 def upload_with_content_type_gzip(file):
     new_file = file[:-3]
     new_file_types = {
+    '.bin': 'binary/octet-stream',
     '.css': 'text/css',
+    '.gltf': 'binary/octet-stream',
     '.hdr': 'binary/octet-stream',
-    '.js': 'text/javascript',
+    '.js': 'text/javascript',    
     }
     for i in new_file_types.keys():
         my_regex = r".*" + re.escape(i) + r"$"
@@ -36,8 +38,6 @@ client = boto3.client('s3',
 )
 
 file_types = {
-'.bin': 'binary/octet-stream',
-'.gltf': 'binary/octet-stream',
 '.gz': 'application/x-gzip',
 '.html': 'text/html',
 '.jpeg': 'image/jpeg',
