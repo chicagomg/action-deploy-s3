@@ -5,13 +5,14 @@ import os,re
 import glob
 from botocore.config import Config
 
-print("plugin v1.4.1")
+print("plugin v1.4.2")
 os.chdir(os.environ['WORKING_PATH'])
 
 def upload_with_content_type_gzip(file):
     new_file = file[:-3]
     new_file_types = {
     '.css': 'text/css',
+    '.hdr': 'binary/octet-stream',
     '.js': 'text/javascript',
     }
     for i in new_file_types.keys():
