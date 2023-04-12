@@ -10,13 +10,13 @@ os.chdir(os.environ['WORKING_PATH'])
 
 def upload_with_content_type_gzip(file, ext):
     client.upload_file(file, os.environ['AWS_BUCKET'],
-        file, ExtraArgs={'ContentType': ext,
+        f'{os.environ['AWS_BUCKET_KEY']}/{file}', ExtraArgs={'ContentType': ext,
         'ContentEncoding': 'gzip', 'ACL': 'public-read'})
     print(file, ext)
 
 def upload_with_content_type(file, ext):
     client.upload_file(file, os.environ['AWS_BUCKET'],
-        file, ExtraArgs={'ContentType': ext, 'ACL': 'public-read'})
+        f'{os.environ['AWS_BUCKET_KEY']}/{file}', ExtraArgs={'ContentType': ext, 'ACL': 'public-read'})
     print(file, ext)
 
 client = boto3.client('s3', 
