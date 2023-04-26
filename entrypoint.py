@@ -44,7 +44,8 @@ file_types = {
 '.jpg': 'image/jpeg',
 '.png': 'image/png',
 '.svg': 'image/svg+xml',
-'.txt': 'text/plain'
+'.txt': 'text/plain',
+'.webp': 'binary/octet-stream'
 }
 
 file_list = glob.glob('**/*.*', recursive=True)
