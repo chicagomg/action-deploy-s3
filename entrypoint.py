@@ -45,6 +45,7 @@ file_types = {
 '.png': 'image/png',
 '.svg': 'image/svg+xml',
 '.txt': 'text/plain',
+'.css': 'text/css',
 '.webp': 'binary/octet-stream'
 }
 
