@@ -12,7 +12,6 @@ file_types = {
 '.bin': 'binary/octet-stream',
 '.css': 'text/css',
 '.gltf': 'model/gltf+json',
-'.gz': 'application/x-gzip',
 '.hdr': 'image/vnd.radiance',
 '.html': 'text/html',
 '.jpeg': 'image/jpeg',
@@ -22,7 +21,8 @@ file_types = {
 '.png': 'image/png',
 '.svg': 'image/svg+xml',
 '.txt': 'text/plain',
-'.webp': 'image/webp'
+'.webp': 'image/webp',
+'.gz': 'application/x-gzip'
 }
 
 def upload_with_content_type_gzip(file):
