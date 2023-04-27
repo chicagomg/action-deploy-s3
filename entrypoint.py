@@ -27,10 +27,10 @@ file_types = {
 def upload_with_content_type_gzip(file):
     new_file = file[:-3]
 
-    for i in new_file_types.keys():
+    for i in file_types.keys():
         my_regex = r".*" + re.escape(i) + r"$"
         for m in re.findall(my_regex, new_file, re.IGNORECASE):
-            new_ext = new_file_types.get(i)
+            new_ext = file_types.get(i)
             client.upload_file(file, os.environ['AWS_BUCKET'],
                 f"{os.environ['AWS_BUCKET_KEY']}/{new_file}", ExtraArgs={'ContentType': new_ext,
                 'ContentEncoding': 'gzip', 'ACL': 'public-read'})
