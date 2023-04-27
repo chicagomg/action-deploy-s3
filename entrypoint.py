@@ -18,6 +18,7 @@ file_types = {
 '.jpeg': 'image/jpeg',
 '.jpg': 'image/jpeg',
 '.js': 'text/javascript',
+'.mind': 'binary/octet-stream',
 '.png': 'image/png',
 '.svg': 'image/svg+xml',
 '.txt': 'text/plain',
