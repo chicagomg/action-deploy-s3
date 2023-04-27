@@ -13,7 +13,7 @@ file_types = {
 '.css': 'text/css',
 '.gltf': 'model/gltf+json',
 '.gz': 'application/x-gzip',
-'.hdr': 'binary/octet-stream',
+'.hdr': 'image/vnd.radiance',
 '.html': 'text/html',
 '.jpeg': 'image/jpeg',
 '.jpg': 'image/jpeg',
@@ -21,7 +21,7 @@ file_types = {
 '.png': 'image/png',
 '.svg': 'image/svg+xml',
 '.txt': 'text/plain',
-'.webp': 'binary/octet-stream'
+'.webp': 'image/webp'
 }
 
 def upload_with_content_type_gzip(file):
@@ -60,5 +60,5 @@ for file in file_list:
             if ext != 'application/x-gzip':
                 upload_with_content_type(file, ext)
             elif ext == 'application/x-gzip':
-                if os.environ['CDN_COMPRESSION'] == "on":
+                if os.environ['CDN_COMPRESSION'].lower() == "on":
                     upload_with_content_type_gzip(file)
