@@ -57,9 +57,9 @@ for file in file_list:
         my_regex = r".*" + re.escape(i) + r"$"
         for m in re.findall(my_regex, file, re.IGNORECASE):
             ext = file_types.get(i)
-            print("debug ", ext)
+            print("debug ", i, ext)
             if ext != 'application/x-gzip':
                 upload_with_content_type(file, ext)
-            else:
-                if os.environ['CDN_COMPRESSION'] == True:
-                    upload_with_content_type_gzip(file)
+            elif ext == 'application/x-gzip':
+                #if os.environ['CDN_COMPRESSION'] == True:
+                upload_with_content_type_gzip(file)
