@@ -34,7 +34,7 @@ def upload_with_content_type_gzip(file):
             client.upload_file(file, os.environ['AWS_BUCKET'],
                 f"{os.environ['AWS_BUCKET_KEY']}/{new_file}", ExtraArgs={'ContentType': new_ext,
                 'ContentEncoding': 'gzip', 'ACL': 'public-read'})
-            print(file, ext)
+            print("compessed ", file, ext)
 
 def upload_with_content_type(file, ext):
     client.upload_file(file, os.environ['AWS_BUCKET'],
@@ -57,6 +57,7 @@ for file in file_list:
         my_regex = r".*" + re.escape(i) + r"$"
         for m in re.findall(my_regex, file, re.IGNORECASE):
             ext = file_types.get(i)
+            print("debug ", ext)
             if ext != 'application/x-gzip':
                 upload_with_content_type(file, ext)
             else:
