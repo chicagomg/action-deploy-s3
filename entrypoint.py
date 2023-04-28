@@ -3,6 +3,7 @@
 import boto3
 import os,re
 import glob
+import time
 from botocore.config import Config
 
 print("plugin v1.5.0")
@@ -25,6 +26,7 @@ file_types = {
 '.gz': 'application/x-gzip'
 }
 
+
 def upload_with_content_type_gzip(file):
     new_file = file[:-3]
 
@@ -37,10 +39,29 @@ def upload_with_content_type_gzip(file):
                 'ContentEncoding': 'gzip', 'ACL': 'public-read'})
             print("compessed ", file, ext)
 
+
 def upload_with_content_type(file, ext):
     client.upload_file(file, os.environ['AWS_BUCKET'],
         f"{os.environ['AWS_BUCKET_KEY']}/{file}", ExtraArgs={'ContentType': ext, 'ACL': 'public-read'})
     print(file, ext)
+
+
+def create_invalidation():
+    res = cf.create_invalidation(
+        DistributionId=os.environ['DISTRIBUTION_ID'],
+        InvalidationBatch={
+            'Paths': {
+                'Quantity': 1,
+                'Items': [
+                    '/*'
+                ]
+            },
+            'CallerReference': str(time.time()).replace(".", "")
+        }
+    )
+    invalidation_id = res['Invalidation']['Id']
+    return invalidation_id
+
 
 client = boto3.client('s3', 
     aws_access_key_id=os.environ['AWS_ACCESS_KEY'], 
@@ -48,6 +69,11 @@ client = boto3.client('s3',
     region_name=os.environ['AWS_REGION']
 )
 
+cf = boto3.client('cloudfront', 
+    aws_access_key_id=os.environ['AWS_ACCESS_KEY'], 
+    aws_secret_access_key=os.environ['AWS_SECRET_KEY'], 
+    region_name=os.environ['AWS_REGION']
+)
 
 
 file_list = glob.glob('**/*.*', recursive=True)
@@ -62,3 +88,7 @@ for i in file_types.keys():
                 upload_with_content_type(file, ext)
             elif ext == 'application/x-gzip':
                 upload_with_content_type_gzip(file)
+
+
+ida = create_invalidation()
+print("Invalidation created successfully with Id: " + ida)
