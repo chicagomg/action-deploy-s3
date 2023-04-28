@@ -52,9 +52,9 @@ client = boto3.client('s3',
 
 file_list = glob.glob('**/*.*', recursive=True)
 
-
-for file in file_list:
-    for i in file_types.keys():
+for i in file_types.keys():
+    for file in file_list:
+    
         my_regex = r".*" + re.escape(i) + r"$"
         for m in re.findall(my_regex, file, re.IGNORECASE):
             ext = file_types.get(i)
