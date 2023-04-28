@@ -6,7 +6,7 @@ import glob
 import time
 from botocore.config import Config
 
-print("plugin v1.5.0")
+print("plugin v1.6.0")
 os.chdir(os.environ['WORKING_PATH'])
 
 file_types = {
@@ -34,14 +34,14 @@ def upload_with_content_type_gzip(file):
         my_regex = r".*" + re.escape(i) + r"$"
         for m in re.findall(my_regex, new_file, re.IGNORECASE):
             new_ext = file_types.get(i)
-            client.upload_file(file, os.environ['AWS_BUCKET'],
+            s3.upload_file(file, os.environ['AWS_BUCKET'],
                 f"{os.environ['AWS_BUCKET_KEY']}/{new_file}", ExtraArgs={'ContentType': new_ext,
                 'ContentEncoding': 'gzip', 'ACL': 'public-read'})
             print("compessed ", file, ext)
 
 
 def upload_with_content_type(file, ext):
-    client.upload_file(file, os.environ['AWS_BUCKET'],
+    s3.upload_file(file, os.environ['AWS_BUCKET'],
         f"{os.environ['AWS_BUCKET_KEY']}/{file}", ExtraArgs={'ContentType': ext, 'ACL': 'public-read'})
     print(file, ext)
 
@@ -63,7 +63,7 @@ def create_invalidation():
     return invalidation_id
 
 
-client = boto3.client('s3', 
+s3 = boto3.client('s3', 
     aws_access_key_id=os.environ['AWS_ACCESS_KEY'], 
     aws_secret_access_key=os.environ['AWS_SECRET_KEY'], 
     region_name=os.environ['AWS_REGION']
