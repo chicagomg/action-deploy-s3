@@ -8,4 +8,4 @@ AWS_REGION <br>
 AWS_BUCKET_KEY <br>
 
 
-### script dosen't copy next types of files: <br>.js, .css, .hdr, .gltf, .bin files. <br>It just takes .gz version of them, cuts .gz, and pushes them to s3 with right metadata, like Content-Type and Content-Encoding:gzip.
+###  Script takes .gz version of files, cuts .gz, and pushes them to s3 with right metadata, like Content-Type and Content-Encoding:gzip.

@@ -61,5 +61,4 @@ for i in file_types.keys():
             if ext != 'application/x-gzip':
                 upload_with_content_type(file, ext)
             elif ext == 'application/x-gzip':
-                if os.environ['CDN_COMPRESSION'].lower() == "on":
-                    upload_with_content_type_gzip(file)
+                upload_with_content_type_gzip(file)
